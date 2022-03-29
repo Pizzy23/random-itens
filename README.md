@@ -1,2 +1,2 @@
 # random-itens
-em desenvolvimento 
+Projeto ainda esta em desenvolvimento.  
