@@ -5,10 +5,12 @@ import {
   damageCreate,
   durability,
   effect,
-  rarityCreate,
   typeCreate,
   requirement,
+  rarityName,
+  rarityStatusMax,
 } from ".";
+import {rareCreate } from "./random/rarity";
 
 const criarItem = async () => {
   let status: {
@@ -24,11 +26,14 @@ const criarItem = async () => {
     weight?: number;
   };
   let i = 0;
-  let statusFinal = await Status(status, i);
+  const rare = await rareCreate()
+  const rarity = await rarityStatusMax(rare)
+  const rareName = await rarityName(rare)
+  let statusFinal = await Status(status, i, rarity);
   let effec;
   let item = {
     Type: await typeCreate(),
-    Rarity: await rarityCreate(),
+    Rarity: rareName,
     Durability: await durability(),
     Damage: await damageCreate(),
     Status: statusFinal,

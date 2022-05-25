@@ -13,18 +13,17 @@ let critic: number,
   cooldown: number,
   weight: number;
 let i = 0;
-const statusMax = 5;
 let num = 0;
-const callAllStatus = async (status, i) => {
+const callAllStatus = async (status, i, statusMax) => {
   try {
-    const statusF = await statusCreate(num, i);
+    const statusF = await statusCreate(num, i, statusMax);
     return statusF;
   } catch (error) {
     console.log(error);
   }
 };
 
-const statusCreate = async (num, i) => {
+const statusCreate = async (num, i, statusMax) => {
   try {
     if (i == undefined || i > statusMax) {
       i = 0;
@@ -42,7 +41,7 @@ const statusCreate = async (num, i) => {
       if (num == 9) immunity = await random.immunity();
       if (num == 10) cooldown = await random.cooldown();
       i++;
-      return statusCreate(num, i);
+      return statusCreate(num, i, statusMax);
     } else if (i == statusMax) {
       return statusOrganization(num);
     }
@@ -75,8 +74,9 @@ const statusOrganization = async (status) => {
   return status;
 };
 
-export const Status = async (status, i) => {
+export const Status = async (status, i, rarity) => {
+  const statusMax = rarity;
   i = 0;
-  const statusF = await callAllStatus(status, i);
+  const statusF = await callAllStatus(status, i, statusMax);
   return statusF;
 };
