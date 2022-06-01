@@ -7,10 +7,10 @@ const dmgCreateType = async () => {
   if (type === 2) return "Physical";
 };
 
-export const damageCreate = async () => {
+export const damageCreate =  async () => {
   const dmgType = await dmgCreateType();
   const damage = await random.damage();
-  let type;
+  let type
   if (dmgType === "Magick") type = await damageMagickCreate();
   if (dmgType === "Physical") type = await damagePhysicalCreate();
   return damage + "/" + type;

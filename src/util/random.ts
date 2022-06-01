@@ -61,8 +61,8 @@ export class NumeroRandomico {
     let random = Math.random() * (3 - 1) + 1;
     return (random = Math.floor(random));
   }
-  async dmgTypes(){
-    let random = Math.random() * (5 - 1)+ 1;
+  async dmgTypes() {
+    let random = Math.random() * (5 - 1) + 1;
     return (random = Math.floor(random));
   }
   async rarity() {

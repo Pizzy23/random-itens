@@ -1,82 +1,78 @@
 import { NumeroRandomico } from "../util/random";
 const random = new NumeroRandomico();
 
-let critic: number,
-  lifesteal: number,
-  atkSpd: number,
-  furry: number,
-  armorPenetration: number,
-  resist: number,
-  defense: number,
-  life: number,
-  immunity: number,
-  cooldown: number,
+export class Status {
+  random: NumeroRandomico;
+  status: {};
+  critic: number;
+  lifesteal: number;
+  atkSpd: number;
+  furry: number;
+  armorPenetration: number;
+  resist: number;
+  defense: number;
+  life: number;
+  immunity: number;
+  cooldown: number;
   weight: number;
-let i = 0;
-let num = 0;
-const callAllStatus = async (status, i, statusMax) => {
-  try {
-    const statusF = await statusCreate(num, i, statusMax);
-    return statusF;
-  } catch (error) {
-    console.log(error);
+  i:number;
+  num: number;
+  statusMax: any;
+  
+  constructor(rarity: number) {
+    this.random = random;
+    this.statusMax = rarity;
   }
-};
 
-const statusCreate = async (num, i, statusMax) => {
-  try {
-    if (i == undefined || i > statusMax) {
-      i = 0;
-    }
-    if (i !== statusMax) {
-      let num = await random.statusSelect();
-      if (num == 1) critic = await random.critic();
-      if (num == 2) lifesteal = await random.lifesteal();
-      if (num == 3) atkSpd = await random.atkSpd();
-      if (num == 4) furry = await random.furry();
-      if (num == 5) armorPenetration = await random.armorPenetration();
-      if (num == 6) resist = await random.resist();
-      if (num == 7) defense = await random.defense();
-      if (num == 8) life = await random.life();
-      if (num == 9) immunity = await random.immunity();
-      if (num == 10) cooldown = await random.cooldown();
-      i++;
-      return statusCreate(num, i, statusMax);
-    } else if (i == statusMax) {
-      return statusOrganization(num);
-    }
-  } catch (err) {
-    console.log(err);
+  async statusCreate() {
+      if (this.i == undefined || this.i > this.statusMax) {
+        this.i = 0;
+      }
+      if (this.i !== this.statusMax) {
+        await this.__setNum()
+        if (this.num == 1) this.critic = await random.critic();
+        if (this.num == 2) this.lifesteal = await random.lifesteal();
+        if (this.num == 3) this.atkSpd = await random.atkSpd();
+        if (this.num == 4) this.furry = await random.furry();
+        if (this.num == 5) this.armorPenetration = await random.armorPenetration();
+        if (this.num == 6) this.resist = await random.resist();
+        if (this.num == 7) this.defense = await random.defense();
+        if (this.num == 8) this.life = await random.life();
+        if (this.num == 9) this.immunity = await random.immunity();
+        if (this.num == 10) this.cooldown = await random.cooldown();
+        this.i++;
+        return await this.statusCreate();
+      } else if (this.i == this.statusMax) {
+        return await this.statusOrganization();
+      }
   }
-};
+  async __setNum() {
+    this.num = await random.statusSelect();
+  }
+  async statusOrganization() {
+    if (this.weight == undefined) this.weight = await random.weight();
+    this.status = {
+      critic: this.critic,
+      lifesteal: this.lifesteal,
+      atkSpd: this.atkSpd,
+      furry: this.furry,
+      armorPenetration: this.armorPenetration,
+      resist: this.resist,
+      defense: this.defense,
+      life: this.life,
+      immunity: this.immunity,
+      cooldown: this.cooldown,
+      weight: this.weight,
+    };
 
-const statusOrganization = async (status) => {
-  if (weight == undefined) weight = await random.weight();
-  status = {
-    critic: critic,
-    lifesteal: lifesteal,
-    atkSpd: atkSpd,
-    furry: furry,
-    armorPenetration: armorPenetration,
-    resist: resist,
-    defense: defense,
-    life: life,
-    immunity: immunity,
-    cooldown: cooldown,
-    weight: weight,
-  };
-
-  let statusF = Object.keys(status).forEach((key) => {
-    if (status[key] == undefined) {
-      delete status[key];
-    }
-  });
-  return status;
-};
-
-export const Status = async (status, i, rarity) => {
-  const statusMax = rarity;
-  i = 0;
-  const statusF = await callAllStatus(status, i, statusMax);
-  return statusF;
-};
+    let refinity = Object.keys(this.status).forEach((key) => {
+      if (this.status[key] == undefined) {
+        delete this.status[key];
+      }
+    });
+    return this.status;
+  }
+  async __status(){
+   return await this.statusCreate()
+  }
+}
