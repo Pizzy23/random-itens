@@ -13,7 +13,7 @@ export const damageCreate = async () => {
   let type;
   if (dmgType === "Magick") type = await damageMagickCreate();
   if (dmgType === "Physical") type = await damagePhysicalCreate();
-  return type + "/" + damage;
+  return damage + "/" + type;
 };
 const damageMagickCreate = async () => {
   const num = await random.dmgTypes();
