@@ -1,7 +1,7 @@
 import {
   Status,
   salveItem,
-  damageCreate,
+  Damage,
   durability,
   effect,
   typeCreate,
@@ -25,18 +25,21 @@ export class CreateItem {
   }
 
   async create() {
-    let i = 0;
     const rare = await rareCreate();
     const rarity = await rarityStatusMax(rare);
     const rareName = await rarityName(rare);
-    const status = await new Status(rarity);
+
+    const damage = new Damage(rare);
+    const status = new Status(rarity);
+
     const statusFinal = await status.__status()
-    const damage = await damageCreate()
+    const dmg = await damage.damageCreate()
+
     const dura = await durability()
     const type = await typeCreate()
     const requi = await requirement()
     let effec = await effect();
-    await this._setItem(type,rareName,dura,damage,statusFinal,effec,requi)
+    await this._setItem(type,rareName,dura,dmg,statusFinal,effec,requi)
     return await this.salveItem()
   }
   async _setItem(type, rarity,dura,damage,status,effect,requirement){

@@ -54,7 +54,7 @@ export class NumeroRandomico {
   }
 
   async damage() {
-    let random = Math.random() * (10000 - 10);
+    let random = Math.random() * (30000 - 1500);
     return (random = Math.floor(random));
   }
   async dmgTy() {
