@@ -60,7 +60,7 @@ export class CreateItem {
     return (this.item = {
       Type: this.type,
       Rarity: this.rareName,
-      Durability: this.dura,
+      Durability: this.durabi,
       Damage: this.dmg,
       Status: this.status,
       Effect: this.effect,
