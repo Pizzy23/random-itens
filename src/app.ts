@@ -2,56 +2,70 @@ import {
   Status,
   salveItem,
   Damage,
-  durability,
+  Durability,
   effect,
   typeCreate,
   requirement,
-  rarityName,
-  rarityStatusMax,
+  Rare
 } from ".";
-import { rareCreate } from "./random/rarity";
+
 
 export class CreateItem {
   item: any;
+  status: any;
+  rareName: any;
+  dmg: any;
+  durabi: any;
+  type: any;
+  dura: any;
+  effect: any;
+  requirement: any;
   constructor(item: any) {
     this.item = item;
+
   }
 
   async salveItem() {
     if (this.item) {
-     return console.log(this.item);
+      return console.log(this.item);
       // await salveItem(item);
     }
   }
 
-  async create() {
-    const rare = await rareCreate();
-    const rarity = await rarityStatusMax(rare);
-    const rareName = await rarityName(rare);
+  async callAllParams(){
+    const rarityObj = new Rare();
+    const rare = await rarityObj.rareCreate();
+    const rarityStatus = await rarityObj.rarityStatusMax(rare);
+    this.rareName = await rarityObj.rarityName(rare);
 
     const damage = new Damage(rare);
-    const status = new Status(rarity);
+    const status = new Status(rarityStatus);
+    const durability = new Durability()
 
-    const statusFinal = await status.__status()
-    const dmg = await damage.damageCreate()
+     this.status = await status.__status();
+     this.dmg = await damage.damageCreate();
+     this.durabi = durability.durabilityCreate(rare);
 
-    const dura = await durability()
-    const type = await typeCreate()
-    const requi = await requirement()
+    const type = await typeCreate();
+    const requi = await requirement();
     let effec = await effect();
-    await this._setItem(type,rareName,dura,dmg,statusFinal,effec,requi)
-    return await this.salveItem()
   }
-  async _setItem(type, rarity,dura,damage,status,effect,requirement){
-    return this.item = {
-      Type: type,
-      Rarity: rarity,
-      Durability: dura,
-      Damage: damage,
-      Status: status,
-      Effect: effect,
-      Reque: requirement,
-    };
+
+  async create() {
+    await this.callAllParams();
+    await this._setItem();
+    return await this.salveItem();
+  }
+  async _setItem() {
+    return (this.item = {
+      Type: this.type,
+      Rarity: this.rareName,
+      Durability: this.dura,
+      Damage: this.dmg,
+      Status: this.status,
+      Effect: this.effect,
+      Reque: this.requirement,
+    });
   }
 }
 const numItem = 1;

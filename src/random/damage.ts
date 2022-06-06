@@ -56,8 +56,8 @@ export class Damage {
     this.num = await random.dmgTypes();
   }
   async __setMulti() {
-    if (this.dmgMultiplier == 0) this.multiDmg = this.damage * 0.2 - 1000;
-    if (this.dmgMultiplier == 1) this.multiDmg = this.damage * 0.5 - 900;
+    if (this.dmgMultiplier == 0) this.multiDmg = this.damage * 0.2;
+    if (this.dmgMultiplier == 1) this.multiDmg = this.damage * 0.5;
     if (this.dmgMultiplier == 2) this.multiDmg = this.damage * 1 - 500;
     if (this.dmgMultiplier == 3) this.multiDmg = this.damage * 1.5 - 400;
     if (this.dmgMultiplier == 4) this.multiDmg = this.damage * 2 - 200;
