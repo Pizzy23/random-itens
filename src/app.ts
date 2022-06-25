@@ -1,70 +1,77 @@
-import { type } from "os";
 import {
   Status,
   salveItem,
-  damageCreate,
-  durability,
+  Damage,
+  Durability,
   effect,
   typeCreate,
   requirement,
-  rarityName,
-  rarityStatusMax,
+  Rare
 } from ".";
-import {rareCreate } from "./random/rarity";
 
-const criarItem = async () => {
-  let status: {
-    critic?: number;
-    lifesteal?: number;
-    atkSpd?: number;
-    furry?: number;
-    armorPenetration?: number;
-    resist?: number;
-    defense?: number;
-    life?: number;
-    immunity?: number;
-    weight?: number;
-  };
-  let i = 0;
-  const rare = await rareCreate()
-  const rarity = await rarityStatusMax(rare)
-  const rareName = await rarityName(rare)
-  let statusFinal = await Status(status, i, rarity);
-  let effec;
-  let item = {
-    Type: await typeCreate(),
-    Rarity: rareName,
-    Durability: await durability(),
-    Damage: await damageCreate(),
-    Status: statusFinal,
-    Effect: await effect(effec),
-    Reque: await requirement(),
-  };
-  if (item) {
-    console.log(item);
-    // await salveItem(item);
+
+export class CreateItem {
+  item: any;
+  status: any;
+  rareName: any;
+  dmg: any;
+  durabi: any;
+  type: any;
+  dura: any;
+  effect: any;
+  requirement: any;
+  constructor(item: any) {
+    this.item = item;
+
   }
-};
 
-const numItem = 1;
-for (let i = 0; i < numItem; i++) {
-  criarItem();
-  if (numItem === i) break;
+  async salveItem() {
+    if (this.item) {
+      return console.log(this.item);
+      // await salveItem(item);
+    }
+  }
+
+  async callAllParams(){
+    const rarityObj = new Rare();
+    const rare = await rarityObj.rareCreate();
+    const rarityStatus = await rarityObj.rarityStatusMax(rare);
+    this.rareName = await rarityObj.rarityName(rare);
+
+    const damage = new Damage(rare);
+    const status = new Status(rarityStatus);
+    const durability = new Durability()
+
+     this.status = await status.__status();
+     this.dmg = await damage.damageCreate();
+     this.durabi = durability.durabilityCreate(rare);
+
+    const type = await typeCreate();
+    const requi = await requirement();
+    let effec = await effect();
+  }
+
+  async create() {
+    await this.callAllParams();
+    await this._setItem();
+    return await this.salveItem();
+  }
+  async _setItem() {
+    return (this.item = {
+      Type: this.type,
+      Rarity: this.rareName,
+      Durability: this.durabi,
+      Damage: this.dmg,
+      Status: this.status,
+      Effect: this.effect,
+      Reque: this.requirement,
+    });
+  }
 }
-function i(
-  status: {
-    critic?: number;
-    lifesteal?: number;
-    atkSpd?: number;
-    furry?: number;
-    armorPenetration?: number;
-    resist?: number;
-    defense?: number;
-    life?: number;
-    immunity?: number;
-    weight?: number;
-  },
-  i: any
-) {
-  throw new Error("Function not implemented.");
+const numItem = 1;
+let item = null;
+const createItem = new CreateItem(item);
+for (let i = 0; i < numItem; i++) {
+  createItem.create();
+  if (numItem === i) break;
 }

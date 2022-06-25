@@ -1,1 +1,1 @@
-export const effect = async (effec) => {};
+export const effect = async () => {};
