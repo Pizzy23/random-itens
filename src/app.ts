@@ -1,11 +1,9 @@
 import {
   Status,
-  salveItem,
+  TypeItem,
   Damage,
   Durability,
-  effect,
-  typeCreate,
-  requirement,
+  CreateEffect,
   Rare
 } from ".";
 
@@ -40,15 +38,16 @@ export class CreateItem {
 
     const damage = new Damage(rare);
     const status = new Status(rarityStatus);
-    const durability = new Durability()
+    const durability = new Durability();
+    const effect = new CreateEffect();
+    const type = new TypeItem()
 
      this.status = await status.__status();
      this.dmg = await damage.damageCreate();
-     this.durabi = durability.durabilityCreate(rare);
+     this.durabi = await durability.durabilityCreate(rare);
+     this.effect = await effect.createEffect(damage.multiDmg)
+     this.type = await type.typeCreate()
 
-    const type = await typeCreate();
-    const requi = await requirement();
-    let effec = await effect();
   }
 
   async create() {

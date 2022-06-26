@@ -42,7 +42,7 @@ export class NumeroRandomico {
     return (random = Math.floor(random));
   }
   async weight() {
-    let random = Math.random() * (10 - 0);
+    let random = Math.random() * (20 - 0);
     let fixedNumber = random.toFixed(2);
     return (random = parseFloat(fixedNumber));
   }
@@ -66,6 +66,18 @@ export class NumeroRandomico {
     return (random = Math.floor(random));
   }
   async rarity() {
+    let random = Math.random() * (7 - 1);
+    return (random = Math.floor(random));
+  }
+  async effect() {  
+    let random = Math.random() * (5 - 1);
+    return (random = Math.floor(random));
+  }
+  async chance () {
+    let random = Math.random() * (100 - 0);
+    return (random = Math.floor(random));
+  }
+  async type() {  
     let random = Math.random() * (7 - 1);
     return (random = Math.floor(random));
   }
