@@ -2,6 +2,7 @@
   "scripts": {
     "debug": "node --inspect dist/app.js",
     "start": "node dist/app.js",
+    "dev": "ts-node ./src/app.ts",
     "build:compile":"npx babel src --extensions .ts --out-dir dist --source-maps",
     "build:types":"tsc",
     "build": "concurrently npm:build:*",
